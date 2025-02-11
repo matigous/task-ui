@@ -2,3 +2,115 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Cores padrão para os temas
+$highlight-color: #4caf50; // Verde
+$accent-color: #ff9800; // Laranja
+$danger-color: #f44336; // Vermelho
+$background-hover: rgba(0, 0, 0, 0.1);
+
+// Mixin para tamanhos
+@mixin size($circleSize, $dotSize, $fontSize) {
+  .dsc-radio-button-circle {
+    width: $circleSize;
+    height: $circleSize;
+  }
+
+  input:checked + .dsc-radio-button-circle::after {
+    width: $dotSize;
+    height: $dotSize;
+  }
+
+  .dsc-radio-button-label {
+    font-size: $fontSize;
+  }
+}
+
+.dsc-radio-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  position: relative;
+  user-select: none;
+  gap: 8px;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .dsc-radio-button-circle {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid $highlight-color;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+  }
+
+  input:checked + .dsc-radio-button-circle {
+    border-color: $highlight-color;
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+
+  input:checked + .dsc-radio-button-circle::after {
+    content: "";
+    position: absolute;
+    background-color: $highlight-color;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  // Variantes de cores
+  &.dsc-radio-button-accent {
+    .dsc-radio-button-circle {
+      border-color: $accent-color;
+    }
+
+    input:checked + .dsc-radio-button-circle {
+      border-color: $accent-color;
+      background-color: rgba(255, 152, 0, 0.1);
+    }
+
+    input:checked + .dsc-radio-button-circle::after {
+      background-color: $accent-color;
+    }
+  }
+
+  &.dsc-radio-button-danger {
+    .dsc-radio-button-circle {
+      border-color: $danger-color;
+    }
+
+    input:checked + .dsc-radio-button-circle {
+      border-color: $danger-color;
+      background-color: rgba(244, 67, 54, 0.1);
+    }
+
+    input:checked + .dsc-radio-button-circle::after {
+      background-color: $danger-color;
+    }
+  }
+
+  // Tamanhos
+  &.dsc-radio-button-small {
+    @include size(16px, 8px, 14px);
+  }
+
+  &.dsc-radio-button-standard {
+    @include size(20px, 10px, 16px);
+  }
+
+  &.dsc-radio-button-large {
+    @include size(24px, 12px, 18px);
+  }
+
+  // Posição do rótulo
+  &.dsc-radio-button-before {
+    flex-direction: row-reverse;
+  }
+}
